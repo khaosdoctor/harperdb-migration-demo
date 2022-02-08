@@ -1,2 +1,4 @@
-export DATABASE_MONGODB_URI=mongodb://localhost:27017
-export DATABASE_MONGODB_DBNAME=mydb
+export DATABASE_URI=http://localhost:9925
+export DATABASE_DBNAME=ship_manager
+export DATABASE_USERNAME=admin
+export DATABASE_PASSWORD=admin

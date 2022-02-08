@@ -22,7 +22,7 @@ export class PortService {
 
     const port = await this.repository.findById(ship.currentPort)
     if (!port) return
-    if (!port.dockedShips.find((dockedShip) => dockedShip.equals(ship.id as ObjectId))) return
+    if (!port.dockedShips.find((dockedShip) => dockedShip.toString() === ship.id?.toString())) return
 
     port.undockShip(ship, reason, user)
 
@@ -34,8 +34,8 @@ export class PortService {
 
     const port = await this.repository.findById(ship.currentPort)
 
-    if (!port) throw new PortNotFoundError(ship.currentPort.toHexString())
-    if (port.dockedShips.find((dockedShip) => dockedShip.equals(ship.id as ObjectId))) return
+    if (!port) throw new PortNotFoundError(ship.currentPort.toString())
+    if (port.dockedShips.find((dockedShip) => dockedShip.toString() === ship.id?.toString())) return
 
     port.dockShip(ship, user)
     await this.repository.save(port)

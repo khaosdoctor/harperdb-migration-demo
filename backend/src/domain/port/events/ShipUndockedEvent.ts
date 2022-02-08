@@ -17,7 +17,7 @@ export class ShipUndockedEvent extends Event<IEventCreationParams> {
   }
 
   static commit (state: Port, event: ShipUndockedEvent): Port {
-    state.dockedShips = state.dockedShips.filter((shipId) => !event.data.shipId.equals(shipId))
+    state.dockedShips = state.dockedShips.filter((shipId) => event.data.shipId.toString() !== shipId.toString())
     state.updatedAt = event.timestamp
     state.updatedBy = event.user
     return state

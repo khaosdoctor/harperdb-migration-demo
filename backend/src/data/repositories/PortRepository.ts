@@ -1,17 +1,9 @@
-import { Db } from 'mongodb'
-import { MongodbEventRepository } from '@irontitan/paradox'
-import { Port } from '../../domain/port/entity'
+import { HarperDBClient } from '../clients/HarperDBClient'
+import { BaseRepository } from './BaseRepository'
+import { Port } from '../../domain'
 
-export class PortRepository extends MongodbEventRepository<Port> {
-  constructor (connection: Db) {
-    super(connection.collection(Port.collection), Port)
-  }
-
-  async getAll (): Promise<Port[]> {
-    const documents = await this._collection.find({ 'state.deletedAt': null }).toArray()
-    return documents.map(({ events }) => {
-      const port = new Port()
-      return port.setPersistedEvents(events)
-    })
+export class PortRepository extends BaseRepository<Port> {
+  constructor (client: HarperDBClient) {
+    super(client, 'ports', Port)
   }
 }

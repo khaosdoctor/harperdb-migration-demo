@@ -1,19 +1,20 @@
 import routes from './routes'
 import { Express } from 'express'
 import expresso from '@expresso/expresso'
+import type { config } from '../app-config'
 import { ShipService } from '../services/ShipService'
 import { ShipRepository } from '../data/repositories/ShipRepository'
-import mongodb from '../data/connections/mongodb'
 import { PortRepository } from '../data/repositories/PortRepository'
 import { PortService } from '../services/PortService'
+import { HarperDBClient } from '../data/clients/HarperDBClient'
 
-export const app = expresso(async (app: Express, config: any) => {
-  const connection = await mongodb.createConnection(config.database.mongodb)
+export const app = expresso(async (app: Express, appConfig: typeof config) => {
+  const client = new HarperDBClient(appConfig.database.harperdb)
 
-  const portRepository = new PortRepository(connection)
+  const portRepository = new PortRepository(client)
   const portService = new PortService(portRepository)
 
-  const shipRepository = new ShipRepository(connection)
+  const shipRepository = new ShipRepository(client)
   const shipService = new ShipService(shipRepository, portService)
 
   app.post('/ships', routes.ship.create.factory(shipService, portService))

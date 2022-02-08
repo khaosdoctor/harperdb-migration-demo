@@ -5,9 +5,11 @@ export const config = {
     exposedHeaders: ['x-content-range']
   },
   database: {
-    mongodb: {
-      uri: env.get('DATABASE_MONGODB_URI'),
-      dbName: env.get('DATABASE_MONGODB_DBNAME')
+    harperdb: {
+      uri: env.get('DATABASE_URI')!,
+      dbName: env.get('DATABASE_DBNAME')!,
+      username: env.get('DATABASE_USERNAME')!,
+      password: env.get('DATABASE_PASSWORD')!
     }
   }
 }

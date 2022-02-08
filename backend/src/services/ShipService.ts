@@ -32,7 +32,7 @@ export class ShipService {
     const obj = new ObjectId(shipId)
     const ship = await this.repository.findById(obj)
 
-    if (!ship) throw new ShipNotFoundError(obj.toHexString())
+    if (!ship) throw new ShipNotFoundError(obj.toString())
     if (!ship.currentPort) return ship
 
     await this.portService.undockShip(ship, reason, user)
@@ -45,7 +45,7 @@ export class ShipService {
     const ship = await this.repository.findById(shipId)
 
     if (!ship) throw new ShipNotFoundError(shipId)
-    if (ship.currentPort && ship.currentPort.toHexString() === portId) return ship
+    if (ship.currentPort && ship.currentPort.toString() === portId) return ship
 
     const port = await this.portService.find(portId)
     ship.dock(port, user)

@@ -4,8 +4,10 @@ services:
   backend:
     build: ./backend
     environment:
-      DATABASE_MONGODB_URI: mongodb://database:27017
-      DATABASE_MONGODB_DBNAME: ship_manager
+      DATABASE_URI: http://database:9925
+      DATABASE_DBNAME: ship_manager
+      DATABASE_USERNAME: admin
+      DATABASE_PASSWORD: admin
       NODE_ENV: ${NODE_ENV:-development}
     ports:
       - "3000:3000"
@@ -20,11 +22,17 @@ services:
       - backend
 
   database:
-    image: mvertes/alpine-mongo
+    image: harperdb/harperdb
     ports:
-      - "27017:27017"
+      - "9925:9925"
+      - "9926:9926"
     volumes:
-      - mongodb:/data/db
+      - db:/opt/harperdb/hdb
+    environment:
+      - HDB_ADMIN_USERNAME=admin
+      - HDB_ADMIN_PASSWORD=admin
+      - CUSTOM_FUNCTIONS=true
+
 
 volumes:
-  mongodb:
+  db:
