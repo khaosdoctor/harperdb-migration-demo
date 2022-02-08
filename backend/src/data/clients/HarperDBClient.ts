@@ -18,7 +18,10 @@ interface HarperNoSQLDeleteType extends HarperNoSQLReturnTypeBase {
   deletedHashes: any[]
 }
 
-type HarperNoSQLReturnType<T> = T extends 'upsert' ? HarperNoSQLUpsertType : T extends 'update' ? HarperNoSQLUpdateType : T extends 'delete' ? HarperNoSQLDeleteType : never
+type HarperNoSQLReturnType<T> = T extends 'upsert'
+  ? HarperNoSQLUpsertType : T extends 'update'
+  ? HarperNoSQLUpdateType : T extends 'delete'
+  ? HarperNoSQLDeleteType : never
 
 export class HarperDBClient {
   #client: AxiosInstance
