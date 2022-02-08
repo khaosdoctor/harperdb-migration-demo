@@ -39,11 +39,8 @@ export class HarperDBClient {
     this.#schema = connectionConfig.dbName
   }
 
-  async SQLFindAll<Entity> (tableName: string, projection: string = '*', whereClause: string = '') {
-    const { data } = await this.#client.post<Entity[]>('/', {
-      operation: 'sql',
-      sql: `SELECT ${projection} FROM ${this.#schema}.${tableName} ${whereClause ? `WHERE ${whereClause}` : ''}`
-    })
+  async SQLFindAll<Entity> (tableName: string) {
+    const { data } = await Axios.get<Entity[]>(`${this.#client.defaults.baseURL?.replace('9925', '9926')}/api/${tableName}`)
     return data
   }
 

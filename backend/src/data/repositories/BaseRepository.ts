@@ -38,7 +38,7 @@ export class BaseRepository<Entity extends IEventEntity> {
   }
 
   async getAll (): Promise<Entity[]> {
-    const documents = await this.database.SQLFindAll<Entity>(this.tableName, 'events', `search_json('deletedAt', state) IS NULL`)
+    const documents = await this.database.SQLFindAll<{ events: Entity['events'] }>(this.tableName)
     return documents.map((document) => new this.entity().setPersistedEvents(document.events))
   }
 }
