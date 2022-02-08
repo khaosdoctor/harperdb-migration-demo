@@ -6,9 +6,10 @@ import { ShipRepository } from '../data/repositories/ShipRepository'
 import mongodb from '../data/connections/mongodb'
 import { PortRepository } from '../data/repositories/PortRepository'
 import { PortService } from '../services/PortService'
+import type { config } from '../app-config'
 
-export const app = expresso(async (app: Express, config: any) => {
-  const connection = await mongodb.createConnection(config.database.mongodb)
+export const app = expresso(async (app: Express, appConfig: typeof config) => {
+  const connection = await mongodb.createConnection(appConfig.database.mongodb)
 
   const portRepository = new PortRepository(connection)
   const portService = new PortService(portRepository)

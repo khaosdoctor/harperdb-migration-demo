@@ -6,8 +6,8 @@ export const config = {
   },
   database: {
     mongodb: {
-      uri: env.get('DATABASE_MONGODB_URI'),
-      dbName: env.get('DATABASE_MONGODB_DBNAME')
+      uri: env.get('DATABASE_MONGODB_URI')!,
+      dbName: env.get('DATABASE_MONGODB_DBNAME')!
     }
   }
 }
