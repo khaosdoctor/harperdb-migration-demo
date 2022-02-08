@@ -40,7 +40,6 @@ export class HarperDBClient {
   }
 
   async SQLFindAll<Entity> (tableName: string, projection: string = '*', whereClause: string = '') {
-    console.log({ message: 'performing operation find all', tableName, projection, whereClause })
     const { data } = await this.#client.post<Entity[]>('/', {
       operation: 'sql',
       sql: `SELECT ${projection} FROM ${this.#schema}.${tableName} ${whereClause ? `WHERE ${whereClause}` : ''}`
@@ -49,7 +48,6 @@ export class HarperDBClient {
   }
 
   async NoSQLUpsert (records: Object[], tableName: string) {
-    console.log({ message: 'performing operation upsert', records })
     const { data } = await this.#client.post<HarperNoSQLReturnType<'upsert'>>('/', {
       operation: 'upsert',
       table: tableName,
@@ -60,7 +58,6 @@ export class HarperDBClient {
   }
 
   async NoSQLUpdate (records: Record<string, any>, tableName: string) {
-    console.log({ message: 'performing operation update', records })
     const { data } = await this.#client.post<HarperNoSQLReturnType<'update'>>('/', {
       operation: 'update',
       table: tableName,
@@ -71,7 +68,6 @@ export class HarperDBClient {
   }
 
   async NoSQLFindByID<Entity> (recordID: string | number, tableName: string, projection: string[] = ['*']) {
-    console.log({ message: 'performing operation find by id', recordID, tableName, projection })
     const { data } = await this.#client.post<Entity>('/', {
       operation: 'search_by_hash',
       table: tableName,
