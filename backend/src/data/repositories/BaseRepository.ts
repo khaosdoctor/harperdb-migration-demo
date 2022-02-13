@@ -32,7 +32,6 @@ export class BaseRepository<Entity extends IEventEntity> {
       events: localEntity.persistedEvents.concat(localEntity.pendingEvents)
     }
     const result = await this.database.NoSQLUpsert([document], this.tableName)
-    console.log(result)
     if (!result.upserted_hashes.includes(document._id.toString())) throw new Error(result.message)
     return entity.confirmEvents()
   }
