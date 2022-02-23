@@ -28,7 +28,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.16.0",
-    "@types/mongodb": "^3.1.22",
+    "@types/mongodb": "@3.1.22",
     "@types/node": "^17.0.16",
     "concurrently": "^4.0.1",
     "husky": "^1.1.2",
@@ -46,7 +46,7 @@
     "axios": "^0.25.0",
     "express-rescue": "^1.1.5",
     "lodash.clonedeep": "^4.5.0",
-    "mongodb": "^3.1.10",
+    "mongodb": "@3.1.10",
     "sugar-env": "^1.5.3"
   }
 }
