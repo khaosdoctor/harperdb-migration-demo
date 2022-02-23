@@ -16,9 +16,8 @@ export class BaseRepository<Entity extends IEventEntity> {
 
   async findById (id: string | ObjectId): Promise<Entity | null> {
     if (!ObjectId.isValid(id)) return null
-    const oid = new ObjectId(id)
 
-    const document = await this.database.NoSQLFindByID<Entity>(oid.toString(), this.tableName, ['state', 'events'])
+    const document = await this.database.NoSQLFindByID<Entity>(id.toString(), this.tableName, ['state', 'events'])
     if (!document) return null
 
     return new this.entity().setPersistedEvents(document.events)
@@ -33,7 +32,7 @@ export class BaseRepository<Entity extends IEventEntity> {
     }
     const result = await this.database.NoSQLUpsert([document], this.tableName)
     if (!result.upserted_hashes.includes(document._id.toString())) throw new Error(result.message)
-    return entity.confirmEvents()
+    return localEntity.confirmEvents()
   }
 
   async getAll (): Promise<Entity[]> {
