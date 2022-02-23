@@ -14,14 +14,9 @@ interface HarperNoSQLUpdateType extends HarperNoSQLReturnTypeBase {
   updated_hashes: any[]
 }
 
-interface HarperNoSQLDeleteType extends HarperNoSQLReturnTypeBase {
-  deletedHashes: any[]
-}
-
 type HarperNoSQLReturnType<T> = T extends 'upsert'
   ? HarperNoSQLUpsertType : T extends 'update'
-  ? HarperNoSQLUpdateType : T extends 'delete'
-  ? HarperNoSQLDeleteType : never
+? HarperNoSQLUpdateType : never
 
 export class HarperDBClient {
   #client: AxiosInstance
@@ -71,7 +66,7 @@ export class HarperDBClient {
   }
 
   async NoSQLFindByID<Entity> (recordID: string | number, tableName: string, projection: string[] = ['*']) {
-    const { data } = await this.#client.post<Entity>('/', {
+    const { data } = await this.#client.post<Entity[]>('/', {
       operation: 'search_by_hash',
       table: tableName,
       schema: this.#schema,
